@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+const {authentication} = require('./middlewares/authentication')
+
 app.use(cookieParser());
 app.use(cors());
 
@@ -17,8 +19,8 @@ const borrowalRouter = require('./routers/borrowalRouter');
 
 app.use(bodyParser.json())
 
-app.get('/', (req, res)=>{
-    res.send("Welcome to node.js Server and All the best for your project")
+app.get('/', authentication,(req, res)=>{
+    return res.status(200).json(req.user)
 })
 
 app.use('/auth', authRouter);

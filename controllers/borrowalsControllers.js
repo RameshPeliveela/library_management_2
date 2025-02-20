@@ -88,6 +88,9 @@ async function returnBook(req, res) {
     try{
         await borrowals.findByIdAndDelete(borrowId);
         const book = await bookModel.findById(bookId);
+        if(!book){
+            return res.status(200).json("Book returned successfully")
+        }
         const quantity = book.quantity + 1;
         book.quantity = quantity;
         book.save();
